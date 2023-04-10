@@ -1,0 +1,35 @@
+{% extends 'layout.html'%}
+
+{% block title %} Sign in{% endblock %}
+
+
+{% block body%}
+<div class="container">
+    <div class="row">
+        <div class="col bg">
+
+        </div>
+        <div class="col">
+            <div class="text-end">
+                <img src="{{url_for('static', filename='img/logo.png')}}" width="48" alt="logo">
+            </div>
+            <!--Login-->
+            <form action="#">
+                <div class="mb-4">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" name="email">
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" name="password">
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock%}

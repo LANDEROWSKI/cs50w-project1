@@ -1,7 +1,8 @@
 import os
-
-from flask import Flask, session
+from flask import Flask, session, render_template, redirect, request
+#from helpers import login_required
 from flask_session import Session
+from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -23,4 +24,4 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
-    return "Project 1: TODO"
+    return render_template('login.html')
