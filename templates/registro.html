@@ -1,0 +1,43 @@
+{% extends 'layout.html'%}
+
+{% block title %} Sign in {% endblock %}
+
+
+{% block body%}
+
+<main class="form-signin w-100 m-auto">
+    <form onSubmit="verificarRegister(event)" id="regis">
+        <img class="mb-4" src="{{url_for('static',filename='img/logo.png')}}" alt="" width="72" height="57" />
+        <h1 class="h3 mb-3 fw-normal">Regístrate</h1>
+
+        <!--Nombre-->
+        <div class="form-floating">
+            <input name="usuario" type="text" class="form-control" id="floatingInput" placeholder="" />
+            <label for="floatingInput">Nombre de usuario</label>
+        </div>
+
+        <div class="form-floating">
+            <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password" />
+            <label for="floatingPassword">Contraseña</label>
+        </div>
+
+        <div class="form-floating">
+            <input name="password2" type="password" class="form-control" id="floatingPassword2"
+                placeholder="Confirmar" />
+            <label for="floatingPassword">Confirmar Contraseña</label>
+        </div>
+
+        <button id="pochita" class="w-100 btn btn-lg btn-primary" type="submit">
+            Registrarse
+        </button>
+        <p class="text-center">
+            <small>Ya estás registrado? <a href="/login">Inicia Sesión</a> </small>
+        </p>
+        <p class="mt-5 mb-3 text-muted text-center">
+            &copy; cs50w-project1
+        </p>
+    </form>
+</main>
+
+
+{% endblock%}

@@ -4,32 +4,32 @@
 
 
 {% block body%}
-<div class="container">
-    <div class="row">
-        <div class="col bg">
+<main class="form-signin w-100 m-auto">
+    <form onSubmit="verificarLog(event)" id="log">
+        <img class="mb-4" src="{{url_for('static',filename='img/logo.png')}}" alt="" width="72" height="57" />
+        <h1 class="h3 mb-3 fw-normal">Inicia Sesión</h1>
 
+        <div class="form-floating">
+            <input name="username" type="text" class="form-control" id="floatingInput" placeholder=""/>
+            <label for="floatingInput"><i class="fad fa-at"></i>Usuario</label>
         </div>
-        <div class="col">
-            <div class="text-end">
-                <img src="{{url_for('static', filename='img/logo.png')}}" width="48" alt="logo">
-            </div>
-            <!--Login-->
-            <form action="#">
-                <div class="mb-4">
-                    <label for="email" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" name="email">
-                </div>
-                <div class="mb-4">
-                    <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" name="password">
-                </div>
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                </div>
-            </form>
+        <div class="form-floating">
+            <input name="Password" type="password" class="form-control" id="floatingPassword" placeholder=""/>
+            <label for="floatingPassword"><i class="fad fa-key"></i>Contraseña</label>
         </div>
-    </div>
-</div>
+
+        <button id="pochita" class="w-100 btn btn-lg btn-primary" type="submit">
+            Iniciar Sesión
+        </button>
+        <p class="text-center">
+            <small>Aún no te registras? <a href="./registro">Registrate</a> </small>
+        </p>
+
+        <p class="mt-5 mb-3 text-muted text-center">
+            &copy; cs50w-project1
+        </p>
+    </form>
+</main>
 
 
 {% endblock%}
