@@ -5,7 +5,7 @@
 
 {% block body%}
 <main class="form-signin w-100 m-auto">
-    <form onSubmit="verificarLog(event)" id="log">
+    <form action="/login" method="post" id="log">
         <img class="mb-4" src="{{url_for('static',filename='img/logo.png')}}" alt="" width="72" height="57" />
         <h1 class="h3 mb-3 fw-normal">Inicia Sesión</h1>
 
@@ -14,8 +14,8 @@
             <label for="floatingInput"><i class="fad fa-at"></i>Usuario</label>
         </div>
         <div class="form-floating">
-            <input name="Password" type="password" class="form-control" id="floatingPassword" placeholder=""/>
-            <label for="floatingPassword"><i class="fad fa-key"></i>Contraseña</label>
+            <input name="password" type="password" class="form-control" id="floatingPassword" placeholder=""/>
+            <label for="floatingPassword">Contraseña</label>
         </div>
 
         <button id="pochita" class="w-100 btn btn-lg btn-primary" type="submit">

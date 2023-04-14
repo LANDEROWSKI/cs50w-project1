@@ -1,12 +1,28 @@
 {% extends 'layout.html'%}
 
+{% block icon %}
+<link rel="icon" href="{{url_for('static', filename='./icon/libro.png')}}" />
+{% endblock %}
+
+<!--CSS INCLUDE-->
+{% block cssFile %}
+<link
+  rel="stylesheet"
+  href="{{url_for('static', filename='./css/index.css')}}"
+/>
+{% endblock %}
+
+
 {% block title %} Home{% endblock %}
 
 
 {% block body%}
-<h3>Elandero</h3>
-<h3>Elandero</h3>
-<h3>Elandero</h3>
-<h3>Elandero</h3>
-
+<section class="inicio">
+    <h2>Bienvenido</h2>
+    <img
+      src="{{url_for('static', filename='./img/book.png')}}"
+      alt="Logo de Libro"
+    />
+    <p>Puedes buscar tus libros favoritos y dejar tu reseña</p>
+  </section>
 {% endblock%}

@@ -1,12 +1,14 @@
 import os
 import requests
 
-from flask import Flask, session, render_template, redirect, request, jsonify
+from flask import Flask, session, render_template, redirect, request, jsonify, url_for
 #from helpers import login_required
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import scoped_session, sessionmaker
+
+from sesion import login_required           
 
 app = Flask(__name__)
 
@@ -26,7 +28,7 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
-    return render_template('login.html')
+    return render_template('index.html')
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -41,11 +43,11 @@ def login():
             return ("Por favor rellene todos los campos"), 400
 
         # print(correo)
-        # print(password)
+        print(password)
 
         rows = db.execute(
             text("SELECT * FROM users WHERE username=:username"), {'username':user}).fetchall()
-        # print(rows)
+        print(len(rows))
 
         if len(rows) != 1 or not check_password_hash(rows[0][2], password):
             return ("Usuario y/o contraseña inválidos"), 400
@@ -81,10 +83,7 @@ def registrar():
         if len(checkUser) != 0:
             return ("Usuario no disponible"), 400
 
-        db.execute(text(f"""
-            INSERT INTO "users" (username, password)
-            VALUES ('{usuario}','{hash_pass}')
-        """))
+        db.execute(text('INSERT INTO users(username,password) values(:username, :password)') , {'username':usuario, 'password':hash_pass})
         db.commit()
 
         return redirect("/")

@@ -6,7 +6,7 @@
 {% block body%}
 
 <main class="form-signin w-100 m-auto">
-    <form onSubmit="verificarRegister(event)" id="regis">
+    <form action="/registro" method="POST" id="regis">
         <img class="mb-4" src="{{url_for('static',filename='img/logo.png')}}" alt="" width="72" height="57" />
         <h1 class="h3 mb-3 fw-normal">Regístrate</h1>
 
@@ -22,7 +22,7 @@
         </div>
 
         <div class="form-floating">
-            <input name="password2" type="password" class="form-control" id="floatingPassword2"
+            <input name="passwordTrue" type="password" class="form-control" id="floatingPassword2"
                 placeholder="Confirmar" />
             <label for="floatingPassword">Confirmar Contraseña</label>
         </div>
