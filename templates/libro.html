@@ -1,0 +1,166 @@
+{% extends 'layout.html' %}
+
+<!--Icon-->
+{% block icon %}
+<link
+  rel="icon"
+  href="{{url_for('static', filename='./icon/unicoLibro.png')}}"
+/>
+{% endblock %}
+
+<!--CSS INCLUDE-->
+{% block cssFile %}
+<link
+  rel="stylesheet"
+  href="{{url_for('static', filename='./css/index.css')}}"
+/>
+{% endblock %}
+
+<!--TITLE-->
+{% block tittle%} {{datosLibro[0]['titulo']}} | BOOKS {% endblock %}
+
+<!--BODY-->
+{% block body%}
+<!-- -----------------VISTA DEL LIBRO --------------------------------- -->
+<h1 class="m-4 text-center">Libro Seleccionado</h1>
+<div class="libro">
+  <div class="part1">
+    <div class="card border-primary m-3" style="max-width: 540px">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            src="{{libroGR['imageLinks']['thumbnail']}}"
+            class="img-fluid rounded-start"
+            alt="libro"
+            style="height: 100%"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h2 class="card-title">{{datosLibro[0]['titulo']}}</h2>
+            <h6 class="card-subtitle text-muted">Autor:</h6>
+            <h6 class="card-subtitle mb-1">{{datosLibro[0]['autor']}}</h6>
+            <h6 class="card-subtitle text-muted">Publicado:</h6>
+            <h6 class="card-subtitle mb-1">{{datosLibro[0]['anio']}}</h6>
+            <h6 class="card-subtitle text-muted">ISBN:</h6>
+            <h6 class="card-subtitle mb-1">{{datosLibro[0]['isbn']}}</h6>
+            <h6 class="card-subtitle text-muted">N° de Calificaciones:</h6>
+            <h6 class="card-subtitle mb-1">{{libroGR['ratingsCount']}}</h6>
+            <h6 class="card-subtitle text-muted">Promedio Calificaciones:</h6>
+            <h6 class="card-subtitle">{{libroGR['averageRating']}}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- -----------------VISTA DEL FORM DE RESEÑA --------------------------------- -->
+  <div class="part2 col-lg-6 col-md-12 me-3 ms-3">
+    <div>
+      <!-- ReseñasFORM -->
+      <form method="POST" class="form-border">
+        <h5 class="text-center">¡Deja tu propia reseña!</h5>
+        <div class="form-row">
+          <div class="input-group">
+            <p style="font-size: 20px; margin-right: 5px">Calificación:</p>
+            <p class="clasificacion">
+              <input
+                id="radio1"
+                type="radio"
+                name="rating"
+                value="5"
+                aria-selected="input"
+              />
+              <label for="radio1">★</label>
+              <input id="radio2" type="radio" name="rating" value="4" />
+              <label for="radio2">★</label>
+              <input id="radio3" type="radio" name="rating" value="3" />
+              <label for="radio3">★</label>
+              <input id="radio4" type="radio" name="rating" value="2" />
+              <label for="radio4">★</label>
+              <input id="radio5" type="radio" name="rating" value="1" checked />
+              <label for="radio5">★</label>
+            </p>
+          </div>
+
+          <h6>Descripción</h6>
+          <div class="input-group">
+            <textarea
+              class="form-control"
+              required
+              name="descrip"
+              rows="3"
+              cols="70"
+            ></textarea>
+          </div>
+
+          <div class="form-group mt-2 d-flex justify-content-center">
+            <button class="btn btn-success" type="submit">Reseñar</button>
+          </div>
+        </div>
+      </form>
+      <!-- -----------------VISTA NOTIFICACION RESEÑA------------------ -->
+      {% with messages = get_flashed_messages(with_categories = true) %} {% if
+      messages %} {% for category, sms in messages %}
+      <div
+        class="alert alert-{{category}} alert-dismissible fade show"
+        role="alert"
+      >
+        {% if category == "danger" %}
+        <i class="fad fa-comment-times"></i>
+        {% else %}
+        <i class="fad fa-comment-check"></i>
+        {% endif %}
+        <span>{{sms}}</span>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+      <!-- ----------------------------------------------------------------- -->
+    </div>
+  </div>
+  <!-- -----------------VISTA RESEÑAS DE USUARIOS LOCAL------------------ -->
+  <div class="part3 w-100">
+    <div
+      class="alert text-center"
+      role="alert"
+      style="
+        margin: 10px 15px 0 15px;
+        background-color: rgba(255, 102, 0, 0.534);
+      "
+    >
+      <h3>Reseñas de usuarios</h3>
+    </div>
+
+    {% if resenias %} {% for resenia in resenias %}
+    <div class="card m-3 border-info">
+      <h5 class="card-header bg-secondary" style="color: white">
+        Opinión de: {{review['username']}}
+      </h5>
+      <div class="card-body">
+        <h6 class="card-text m-0 text-muted">Comentario:</h6>
+        <p class="card-text">
+          <strong> "{{review['reviewer']}}"</strong>
+        </p>
+        <p class="card-text">
+          Calificación: <i class="fad fa-star"></i>
+          <strong>{{review['rate']}}</strong>
+        </p>
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <div
+      class="alert alert-warning text-center"
+      role="alert"
+      style="margin: 10px 15% 10px 15%"
+    >
+      <h5>Aún no tiene reseñas</h5>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

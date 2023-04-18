@@ -1,7 +1,7 @@
 {% extends 'layout.html'%}
 
 {% block icon %}
-<link rel="icon" href="{{url_for('static', filename='./icon/libro.png')}}" />
+<link rel="icon" href="{{url_for('static', filename='./img/book.png')}}" />
 {% endblock %}
 
 <!--CSS INCLUDE-->
@@ -13,12 +13,16 @@
 {% endblock %}
 
 
-{% block title %} Home{% endblock %}
+{% block title %} Inicio {% endblock %}
 
 
 {% block body%}
+<div class="container-landero">
+  <h1 class="lionel">Bienvenid@ {{session.nombre}}</h1>
+</div>
+
 <section class="inicio">
-    <h2>Bienvenido</h2>
+
     <img
       src="{{url_for('static', filename='./img/book.png')}}"
       alt="Logo de Libro"

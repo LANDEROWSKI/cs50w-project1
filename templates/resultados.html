@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+<!--Icon-->
+{% block icon %}
+<link rel="icon" href="{{url_for('static', filename='./icon/buscar.png')}}" />
+{% endblock %}
+
+<!--CSS INCLUDE-->
+{% block cssFile %}
+<link
+  rel="stylesheet"
+  href="{{url_for('static', filename='./css/index.css')}}"
+/>
+{% endblock %}
+
+<!--TITLE-->
+{% block tittle%} Resultados {% endblock %}
+
+<!--BODY-->
+{% block body%}
+<section class="inicio">
+  {% if existe %}
+  <div class="alert alert-success" role="alert">
+    <h3>Resultados de Búsqueda</h3>
+  </div>
+  <div class="resultados">
+    {% for libro in libros %}
+    <div class="card border-dark" style="width: 12rem">
+      <div class="card-body">
+        <h6 class="card-text mb-0 text-muted">Titulo:</h6>
+        <h4 class="card-title">{{libro['titulo']}}</h4>
+        <h6 class="card-text mb-0 text-muted">Autor:</h6>
+        <h6 class="card-text">{{libro['autor']}}</h6>
+        <h6 class="card-text mb-0 text-muted">Año :</h6>
+        <h6 class="card-text">{{libro['anio']}}</h6>
+        <h6 class="card-text mb-0 text-muted">ISBN:</h6>
+        <h6 class="card-text">{{libro['isbn']}}</h6>
+      </div>
+      <div class="card-footer">
+        <a href="/libro/{{libro['isbn']}}" class="card-link">Ver Libro</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert alert-danger" role="alert">
+    <h4>No se encontraron resultados</h4>
+  </div>
+
+  {% endif %}
+</section>
+{% endblock %}

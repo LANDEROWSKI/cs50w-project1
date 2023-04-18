@@ -1,0 +1,8 @@
+.container-landero {
+    height: 95vh;
+    background: url(./static/img/biblioteca.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+  }

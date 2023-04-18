@@ -19,49 +19,71 @@
   <!-- CSS File -->
   {% block css %} {% endblock %}
 
-  <title>{% block title %} {% endblock %} | Books</title>
+  <title>{% block title %} {% endblock %} | project1 </title>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toogler"
-        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar-toogler">
-        <a class="navbar-brand" href="#">
-          <img src="{{url_for('static', filename='./img/logo.png')}}" width="50px" alt="bocchi-the-rock">
-        </a>
-        {% if session.user_id %}
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/" rel="noopener noreferrer">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/buscar">Buscar</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">Cerrar Sesión</a>
-          </li>
-        </ul>
 
-        {% else %}
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/" rel="noopener noreferrer">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Iniciar Sesión</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/registro">Registrarse</a>
-          </li>
-        </ul>
-        {% endif %}
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toogler"
+          aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-toogler">
+          <a class="navbar-brand" href="#">
+            <img src="{{url_for('static', filename='./img/logo.png')}}" width="40px" height="50px"
+              alt="bocchi-the-rock">
+          </a>
+          {% if session.user_id %}
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/" rel="noopener noreferrer">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/buscar">Buscar</a>
+            </li>
+            <div class="nav-item dropdown user">
+              <a
+                class="nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {{session.username}}
+              </a>
+
+              <ul class="dropdown-menu">
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
+                </li>
+              </ul>
+            </div>
+          </ul>
+
+          {% else %}
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/" rel="noopener noreferrer">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Iniciar Sesión</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/registro">Registrarse</a>
+            </li>
+          </ul>
+          {% endif %}
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+
+    <h2>Bienvenido {{session.username}}</h2>
+  </header>
+
+
 
   {% block body%} {% endblock %}
 
@@ -74,7 +96,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
     integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
     crossorigin="anonymous"></script>
- 
+
 </body>
 
 </html>
