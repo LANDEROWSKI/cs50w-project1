@@ -109,7 +109,7 @@ def buscar():
         # Este metodo 'title' vuelve todas las letras de cada palbra en mayuscula
         search = search.title()
 
-        libros = db.execute(text(f"""SELECT * FROM book WHERE title LIKE '%{search}%' OR 
+        libros = db.execute(text(f"""SELECT * FROM books WHERE title LIKE '%{search}%' OR 
         author LIKE '%{search}%' OR isbn LIKE '%{search}%'"""))
 
         if libros.rowcount == 0:
@@ -119,7 +119,7 @@ def buscar():
 
         # print(libros)
 
-        return render_template('resultados.html', libros=libros, existe=True)
+        return render_template('resultados.html', books=libros, existe=True)
 
     else:
         return render_template('buscar.html')
@@ -134,12 +134,12 @@ def libro(isbn):
         descrip = request.form.get('descrip')
 
         # Obtener ID del librop
-        id_libro = db.execute(text("SELECT id_book FROM book WHERE isbn = :isbn"),
+        id_libro = db.execute(text("SELECT id_libros FROM books WHERE isbn = :isbn"),
                               {"isbn": isbn}).fetchone()
         id_libro = id_libro[0]
 
         # Se verifica que el usuario actual solo haya reseñado una vez este libro
-        resenias = db.execute(text("SELECT * FROM review WHERE id_user = :id_user AND id_book = :id_book"),
+        resenias = db.execute(text("SELECT * FROM reviews WHERE id_user = :id_user AND id_book = :id_book"),
                               {"id_user": session['user_id'],
                                "id_book": id_libro})
 
@@ -149,10 +149,10 @@ def libro(isbn):
             return redirect("/libro/" + isbn)
 
         # Si no hay reseñas se inserta en la base de datos
-        db.execute(text("""INSERT INTO review (rate, reviewer, id_user, id_book) VALUES 
-                    (:rate, :reviewer, :id_user, :id_book)"""),
-                   {"rate": califi,
-                    "reviewer": descrip,
+        db.execute(text("""INSERT INTO reviews (rating, description, id_user, id_book) VALUES 
+                    (:rating, :description, :id_user, :id_book)"""),
+                   {"rating": califi,
+                    "description": descrip,
                     "id_user": session['user_id'],
                     "id_book": id_libro})
 
@@ -164,7 +164,7 @@ def libro(isbn):
     else:
         # Consulta al libro (datos)
         datosLibro = db.execute(
-            text("SELECT isbn, title, author, year FROM book WHERE isbn=:isbn"), {'isbn': isbn})
+            text("SELECT isbn, title, author, year FROM books WHERE isbn=:isbn"), {'isbn': isbn})
         datosLibro = datosLibro.fetchall()
 
         # Consulta de API GOOGLE BOOKS como json-----------------
@@ -178,17 +178,17 @@ def libro(isbn):
         # Conusulta reseñas de usuario lcoal ------------------
 
         # Obtener ID del librop
-        id_libro = db.execute(text("SELECT id_book FROM book WHERE isbn = :isbn"),
+        id_libro = db.execute(text("SELECT id_libros FROM books WHERE isbn = :isbn"),
                               {"isbn": isbn}).fetchone()
         id_libro = id_libro[0]
 
-        resenias = db.execute(text(f""" SELECT U.username, reviewer, rate FROM review AS R 
+        resenias = db.execute(text(f""" SELECT U.username, description, rating FROM reviews AS R 
                                     INNER JOIN users AS U 
                                     ON U.id=R.id_user WHERE R.id_book={id_libro}""")).fetchall()
 
         # print(libroGR)
         # print(resenias[0])
-        return render_template('libro.html', datosLibro=datosLibro, libroGR=libroGR, review=resenias)
+        return render_template('libro.html', datosLibro=datosLibro, libroGR=libroGR, reviews=resenias)
 
 
 @app.route('/api/<isbn>', methods=['GET'])
@@ -197,8 +197,8 @@ def api(isbn):
     # Consulta de todos los datos para el JSON
     consulta = db.execute(text("""
         SELECT title, author, isbn, year, COUNT(R.id_resenias) AS review_count, AVG(R.calificacion) AS average_score 
-        FROM book AS L
-        INNER JOIN resenias AS R ON L.id_libros=R.id_book
+        FROM books AS L
+        INNER JOIN reviewa AS R ON L.id_libros=R.id_book
         WHERE isbn=:isbn
         GROUP BY title, author, isbn, year
     """), {'isbn': isbn}).fetchone()
