@@ -116,11 +116,12 @@ def buscar():
 
         libros = libros.fetchall()
 
-        # print(libros)
+       
 
         return render_template('resultados.html', books=libros, existe=True)
 
     else:
+
         return render_template('buscar.html')
 
 
