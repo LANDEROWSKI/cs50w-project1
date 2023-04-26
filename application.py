@@ -34,7 +34,9 @@ def login():
         password = request.form['password']
 
         if not user or not password:
-            return ("Por favor rellene todos los campos"), 400
+            mensaje = 'campos vacios'
+            return render_template('error.html', MESSAGE=mensaje)
+
 
         print(password)
 
@@ -43,7 +45,8 @@ def login():
         print(len(rows))
 
         if len(rows) != 1 or not check_password_hash(rows[0][2], password):
-            return ("Usuario y/o contraseña inválidos"), 400
+            mensaje = 'Correo y Contraseña Incorrecta!'
+            return render_template('error.html', MESSAGE=mensaje)
 
         session['user_id'] = rows[0][0]
         session['username'] = rows[0][1]
@@ -64,11 +67,14 @@ def registrar():
         hash_pass = generate_password_hash(password)
 
         if not usuario or not password:
-            return ("Por favor rellene todos los campos"), 400
+            mensaje = 'Por favor rellene todos los campos'
+            return render_template('error.html', MESSAGE=mensaje)
         elif not passwordTrue:
-            return ("Debe confirmar contraseña"), 400
+            mensaje = 'Debe confirmar contrasenia'
+            return render_template('error.html', MESSAGE=mensaje)
         elif password != passwordTrue:
-            return ("Contraseñas no coinciden"), 400
+            mensaje = 'Contrasenia no coinciden'
+            return render_template('error.html', MESSAGE=mensaje)
 
         checkUser = db.execute(text("SELECT * FROM users WHERE username = :username"),
                                {"username": usuario}).fetchall()

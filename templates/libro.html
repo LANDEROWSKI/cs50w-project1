@@ -1,23 +1,20 @@
-{% extends 'layout.html' %}
+{% extends 'layout.html'%}
 
-<!--Icon-->
+
 {% block icon %}
-<link
-  rel="icon"
-  href="{{url_for('static', filename='./icon/unicoLibro.png')}}"
-/>
+<link rel="icon" href="{{url_for('static', filename='./img/book.png')}}" />
 {% endblock %}
 
-<!--CSS INCLUDE-->
+
 {% block cssFile %}
 <link
   rel="stylesheet"
-  href="{{url_for('static', filename='./css/index.css')}}"
+  href="{{url_for('static', filename='./css/style.css')}}"
 />
 {% endblock %}
 
 <!--TITLE-->
-{% block tittle%} {{datosLibro[0]['titulo']}} | BOOKS {% endblock %}
+{% block tittle%} | RESULTADOS {% endblock %}
 
 <!--BODY-->
 {% block body%}
@@ -53,12 +50,11 @@
     </div>
   </div>
 
-  <!-- -----------------VISTA DEL FORM DE RESEÑA --------------------------------- -->
+  <!-- No me agarró el CSS pipipipipi -->
   <div class="part2 col-lg-6 col-md-12 me-3 ms-3">
     <div>
-      <!-- ReseñasFORM -->
       <form method="POST" class="form-border">
-        <h5 class="text-center">¡Deja tu propia reseña!</h5>
+        <h5 class="text-center">Apoya dejando tu reseña</h5>
         <div class="form-row">
           <div class="input-group">
             <p style="font-size: 20px; margin-right: 5px">Calificación:</p>
@@ -67,22 +63,22 @@
                 id="radio1"
                 type="radio"
                 name="rating"
-                value="5"
+                value="1"
                 aria-selected="input"
               />
               <label for="radio1">★</label>
-              <input id="radio2" type="radio" name="rating" value="4" />
+              <input id="radio2" type="radio" name="rating" value="2" />
               <label for="radio2">★</label>
               <input id="radio3" type="radio" name="rating" value="3" />
               <label for="radio3">★</label>
-              <input id="radio4" type="radio" name="rating" value="2" />
+              <input id="radio4" type="radio" name="rating" value="4" />
               <label for="radio4">★</label>
-              <input id="radio5" type="radio" name="rating" value="1" checked />
+              <input id="radio5" type="radio" name="rating" value="5" checked />
               <label for="radio5">★</label>
             </p>
           </div>
 
-          <h6>Descripción</h6>
+          <h6>Comentario</h6>
           <div class="input-group">
             <textarea
               class="form-control"
@@ -98,7 +94,6 @@
           </div>
         </div>
       </form>
-      <!-- -----------------VISTA NOTIFICACION RESEÑA------------------ -->
       {% with messages = get_flashed_messages(with_categories = true) %} {% if
       messages %} {% for category, sms in messages %}
       <div
@@ -122,7 +117,6 @@
       <!-- ----------------------------------------------------------------- -->
     </div>
   </div>
-  <!-- -----------------VISTA RESEÑAS DE USUARIOS LOCAL------------------ -->
   <div class="part3 w-100">
     <div
       class="alert text-center"
@@ -147,6 +141,9 @@
         </p>
         <p class="card-text">
           Calificación: <i class="fad fa-star"></i>
+          <img src="{{url_for('static',filename='img/jojo-star.png')}}" class="rounded mb-2"
+          width="60"
+          height="60" alt="">
           <strong>{{resenia['rating']}}</strong>
         </p>
       </div>
