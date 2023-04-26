@@ -1,35 +1,53 @@
 {% extends 'layout.html'%}
 
-{% block title %} Sign in{% endblock %}
+{% block title %} Sign in {% endblock %}
 
+{% block icon %}
+<link rel="icon" href="{{url_for('static', filename='./img/book.png')}}" />
+{% endblock %}
+
+<!-- CSS -->
+{% block cssFile %}
+<link
+  rel="stylesheet"
+  href="{{url_for('static', filename='./css/style.css')}}"
+/>
+{% endblock %}
 
 {% block body%}
-<main class="form-signin w-100 m-auto">
-    <form action="/login" method="post" id="log">
-        <img class="mb-4" src="{{url_for('static',filename='img/logo.png')}}" alt="" width="72" height="57" />
-        <h1 class="h3 mb-3 fw-normal">Inicia Sesión</h1>
+<div class="container-login">
 
-        <div class="form-floating">
-            <input name="username" type="text" class="form-control" id="floatingInput" placeholder=""/>
-            <label for="floatingInput"><i class="fad fa-at"></i>Usuario</label>
-        </div>
-        <div class="form-floating">
-            <input name="password" type="password" class="form-control" id="floatingPassword" placeholder=""/>
-            <label for="floatingPassword">Contraseña</label>
-        </div>
+</div>
 
-        <button id="pochita" class="w-100 btn btn-lg btn-primary" type="submit">
-            Iniciar Sesión
-        </button>
-        <p class="text-center">
-            <small>Aún no te registras? <a href="./registro">Registrate</a> </small>
-        </p>
+<body>
+    <main class="form-signin w-100 m-auto">
+        <form action="/login" method="post" id="log">
+            <img class="" src="{{url_for('static',filename='img/watamote.png')}}" alt="watamote" width="123px"  height="130px"/>
+            <h1 class="h3 mb-3 fw-normal">Iniciar Sesión</h1>
+    
+            <div class="form-floating">
+                <input name="username" type="text" class="form-control" id="floatingInput" placeholder="Confirmar"/>
+                <label for="floatingInput"><i class="fad fa-at"></i>Usuario</label>
+            </div>
+            <div class="form-floating">
+                <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Confirmar"/>
+                <label for="floatingPassword">Contraseña</label>
+            </div>
+    
+            <button id="pochita" class="w-100 btn btn-lg btn-primary" type="submit">
+                Iniciar Sesión
+            </button>
+            <p class="text-center">
+                <small>Aún no te registras? <a href="./registro">Registrate</a> </small>
+            </p>
+    
+            <p class="mt-5 mb-3 text-muted text-center">
+                &copy; cs50w-project1
+            </p>
+        </form>
+    </main>
+</body>
 
-        <p class="mt-5 mb-3 text-muted text-center">
-            &copy; cs50w-project1
-        </p>
-    </form>
-</main>
 
 
 {% endblock%}

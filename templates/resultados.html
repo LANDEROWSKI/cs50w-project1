@@ -20,9 +20,7 @@
 {% block body%}
 <section class="inicio">
   {% if existe %}
-  <div class="alert alert-success" role="alert">
-    <h3>Resultados de Búsqueda</h3>
-  </div>
+  <h2>Estos son los resultados</h2>
   <div class="resultados">
     {% for libro in books %}
     <div class="card border-dark" style="width: 12rem">

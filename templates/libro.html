@@ -21,8 +21,7 @@
 
 <!--BODY-->
 {% block body%}
-<!-- -----------------VISTA DEL LIBRO --------------------------------- -->
-<h1 class="m-4 text-center">Libro Seleccionado</h1>
+
 <div class="libro">
   <div class="part1">
     <div class="card border-primary m-3" style="max-width: 540px">
@@ -130,25 +129,25 @@
       role="alert"
       style="
         margin: 10px 15px 0 15px;
-        background-color: rgba(255, 102, 0, 0.534);
+        background-color: rgba(94, 255, 0, 0.534);
       "
     >
       <h3>Reseñas de usuarios</h3>
     </div>
 
-    {% if resenias %} {% for resenia in resenias %}
+    {% if reviews %} {% for resenia in reviews %}
     <div class="card m-3 border-info">
-      <h5 class="card-header bg-secondary" style="color: white">
-        Opinión de: {{review['username']}}
+      <h5 class="card-header bg-secondary" style="color: rgb(255, 255, 255)">
+        Opinión de: {{resenia['username']}}
       </h5>
       <div class="card-body">
         <h6 class="card-text m-0 text-muted">Comentario:</h6>
         <p class="card-text">
-          <strong> "{{review['reviewer']}}"</strong>
+          <strong> "{{resenia['description']}}"</strong>
         </p>
         <p class="card-text">
           Calificación: <i class="fad fa-star"></i>
-          <strong>{{review['rate']}}</strong>
+          <strong>{{resenia['rating']}}</strong>
         </p>
       </div>
     </div>

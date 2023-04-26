@@ -9,7 +9,7 @@
 {% block cssFile %}
 <link
   rel="stylesheet"
-  href="{{url_for('static', filename='./css/index.css')}}"
+  href="{{url_for('static', filename='./css/style.css')}}"
 />
 {% endblock %}
 
@@ -19,13 +19,15 @@
 
 {% block body%}
 <div class="search">
-    <h2>BOOKS</h2>
+    <h2>Busca el libro que mas gustes</h2>
     <div class="col-auto">
       <label class="visually-hidden" for="autoSizingInputGroup">Busqueda</label>
       <img
         class="img-fluid mx-auto d-block"
-        src="{{url_for('static', filename='./img/Buscar.jpeg')}}"
+        src="{{url_for('static', filename='./img/buscar.png')}}"
         alt="Buscar Libro"
+        width="50px"
+        height="50px"
       />
   
       <form action="/buscar" method="post">
@@ -42,9 +44,6 @@
             <button type="submit" class="btn btn-primary">Buscar</button>
           </div>
         </div>
-        <small class="form-text text-muted"
-          >Ejemplo: 0871404028, High-Rise ó J.G. Ballard</small
-        >
       </form>
     </div>
   </div>

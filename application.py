@@ -2,7 +2,6 @@ import os
 import requests
 
 from flask import Flask, session, render_template, redirect, request, jsonify, url_for, flash
-# from helpers import login_required
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import create_engine, text
@@ -12,24 +11,19 @@ from sesion import login_required
 
 app = Flask(__name__)
 
-# Check for environment variable
 if not os.getenv("DATABASE_URL"):
     raise RuntimeError("DATABASE_URL is not set")
 
-# Configure session to use filesystem
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# Set up database
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
-
 
 @app.route("/")
 def index():
     return render_template('index.html')
-
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -42,7 +36,6 @@ def login():
         if not user or not password:
             return ("Por favor rellene todos los campos"), 400
 
-        # print(correo)
         print(password)
 
         rows = db.execute(
@@ -63,7 +56,7 @@ def login():
 @app.route("/registro", methods=["GET", "POST"])
 def registrar():
     if request.method == 'POST':
-        # obtener datos
+
         usuario = request.form['usuario']
         password = request.form['password']
         passwordTrue = request.form['passwordTrue']
@@ -144,11 +137,10 @@ def libro(isbn):
                                "id_book": id_libro})
 
         if resenias.rowcount != 0:
-            # print("NO SE PUDO")
-            flash("Solo puedes reseñar una vez", "danger")
+            flash("Ya has dado tu resenia", "danger")
             return redirect("/libro/" + isbn)
 
-        # Si no hay reseñas se inserta en la base de datos
+        # Si el usuario aun no ha dado una resenia se guarda
         db.execute(text("""INSERT INTO reviews (rating, description, id_user, id_book) VALUES 
                     (:rating, :description, :id_user, :id_book)"""),
                    {"rating": califi,
@@ -158,26 +150,18 @@ def libro(isbn):
 
         db.commit()
 
-        # print("CLAROOO SE PUDO")
-        flash("Reseña Enviada", "success")
+        flash("Reseña Guardada Exitosamente", "success")
         return redirect("/libro/" + isbn)
     else:
-        # Consulta al libro (datos)
         datosLibro = db.execute(
             text("SELECT isbn, title, author, year FROM books WHERE isbn=:isbn"), {'isbn': isbn})
         datosLibro = datosLibro.fetchall()
 
-        # Consulta de API GOOGLE BOOKS como json-----------------
         libroGR = requests.get(
             "https://www.googleapis.com/books/v1/volumes?q=isbn:"+isbn).json()
-
-        # accedo en donde esta la informacion que necesito
         libroGR = libroGR['items']
         libroGR = libroGR[0]['volumeInfo']
-
-        # Conusulta reseñas de usuario lcoal ------------------
-
-        # Obtener ID del librop
+        
         id_libro = db.execute(text("SELECT id_libros FROM books WHERE isbn = :isbn"),
                               {"isbn": isbn}).fetchone()
         id_libro = id_libro[0]
@@ -185,9 +169,7 @@ def libro(isbn):
         resenias = db.execute(text(f""" SELECT U.username, description, rating FROM reviews AS R 
                                     INNER JOIN users AS U 
                                     ON U.id=R.id_user WHERE R.id_book={id_libro}""")).fetchall()
-
-        # print(libroGR)
-        # print(resenias[0])
+        
         return render_template('libro.html', datosLibro=datosLibro, libroGR=libroGR, reviews=resenias)
 
 
