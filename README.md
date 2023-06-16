@@ -5,10 +5,13 @@ Una web en donde deberemos crear una cuenta e iniciar sesión para poder buscar 
 1. Uso de /api/<isbn>
 Al momento de seleccionar un libro y estar en las reseñas en la url aparecerá
 ../libro/IsbnDelLibro, solamente se debe sustituir la palabra ../libro/.. por ../api/..
+
 2.Application.pu
 Contiene el backend
+
 3.sesion.py
 Es mandar a llamar el Login en ciertas direcciones.
+
 4.import.py
 Contiene la estructura de las tablas y permitir subir los libros
 
